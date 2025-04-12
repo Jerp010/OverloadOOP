@@ -23,20 +23,19 @@ class AbstractVector(ABC):
 
 
 # Inheritance and Polymorphism
-class Vector(AbstractVector):
-    def __init__(self, *components):
+class Vector(AbstractVector):  # Inherits from AbstractVector
+    def __init__(self, *components):  # Instance Method + Encapsulation
         super().__init__(*components)
 
-    def __add__(self, other):  # Operator Overloading (Polymorphism)
+    def __add__(self, other):  # Polymorphism via Operator Overloading
         if isinstance(other, Vector) and len(self._components) == len(other._components):
-            result_components = [a + b for a, b in zip(self._components, other._components)]
-            return Vector(*result_components)
-        else:
-            raise ValueError("Vectors must be of the same dimension.")
+            # Add corresponding components
+            added = [x + y for x, y in zip(self._components, other._components)]
+            return Vector(*added)
+        raise ValueError("Vectors must be the same length.")
 
     def get_components(self):  # Instance Method
         return self._components
-
 
 def main():
     v1 = Vector(1, 2, 3)
@@ -46,8 +45,6 @@ def main():
     print("v1:", v1)
     print("v2:", v2)
     print("v1 + v2:", v3)
-    print("Created using from_string:", Vector.from_string("7,8,9"))
-    print("Dimension info:", Vector.dimension_info())
 
 
 if __name__ == "__main__":
